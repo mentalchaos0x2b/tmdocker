@@ -1,7 +1,7 @@
 {
   "name": "tmdocker",
   "productName": "tmdocker",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
