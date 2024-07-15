@@ -1,6 +1,8 @@
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
+require('dotenv').config();
+
 module.exports = {
   packagerConfig: {
     asar: true,
@@ -33,6 +35,20 @@ module.exports = {
         icon: 'src/assets/media/TMW.ico'
       },
     },
+  ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'nxghtmxre0xf',
+          name: 'tmdocker',
+        },
+        prerelease: false,
+        draft: true,
+        authToken: process.env.GITHUB_TOKEN
+      }
+    }
   ],
   plugins: [
     {
