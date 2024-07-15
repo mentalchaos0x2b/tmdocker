@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="../css/cssgg.css">
+
+  <script src="../js/jquery-3.7.1.min.js"></script>
+
+  <link rel="shortcut icon" href="../media/TMW.ico" type="image/x-icon">
+  <title>TMDocker</title>
+</head>
+<body>
+
+  <context>
+    <button class="default-button" onclick="ctx.copy()"><gg-item class="gg-copy"></gg-item>Копировать</button>
+    <button class="default-button" onclick="ctx.paste()"><gg-item class="gg-push-chevron-down"></gg-item>Вставить</button>
+    <button class="default-button" onclick="ctx.pasteAndRun()"><gg-item class="gg-search"></gg-item>Вставить и найти</button>
+    <button class="default-button" onclick="ctx.pasteAndPrint()"><gg-item class="gg-printer"></gg-item>Вставить и напечатать</button>
+    <button class="default-button" onclick="ctx.cut()"><gg-item class="gg-shortcut"></gg-item>Вырезать</button>
+    <button class="default-button" onclick="ctx.delete()"><gg-item class="gg-trash"></gg-item>Удалить</button>
+  </context>
+
+  <app>
+    <controls>
+      <logo><small>realease</small></logo>
+      <div class="row-container">
+        <input class="default-input get-input" onkeypress="return /[0-9]/i.test(event.key)" type="text" placeholder="Номер заявки" value="">
+        <button class="default-button get-button"><gg-item class="gg-search"></gg-item></button>
+      </div>
+      <!-- <separate-settings>
+        <div class="toggle-pill-bw">
+          <input type="checkbox" class="separate-check" id="pill2" name="check">
+          <label for="pill2"></label>
+        </div>
+        <small>Разделить</small>
+        <input type="text" class="default-input separator-get" placeholder="Разделитель">
+      </separate-settings> -->
+      <values>
+        <cap>
+          <small></small>
+        </cap>
+        <loading>
+            <div class="tm-loading">
+              <span class="tm-loading-item"></span>
+              <span class="tm-loading-item"></span>
+              <span class="tm-loading-item"></span>
+            </div> 
+        </loading>
+        <values-box>
+          <p class="value">Номер: <span contenteditable class="key id">null</span></p>
+          <separator></separator>
+          <p class="value">Заявитель: <span contenteditable class="key applicant">null</span></p>
+          <separator></separator>
+          <p class="value">Телефон: <span contenteditable class="key phone">null</span></p>
+          <separator></separator>
+          <p class="value">SN: <span contenteditable class="key sn">null</span></p>
+          <separator></separator>
+          <p class="value">Тип: <span contenteditable class="key model-type">null</span></p>
+          <separator></separator>
+          <p class="value">Причина: <span contenteditable class="key text">null</span></p>
+          <separator></separator>
+          <p class="value">Описание: <span contenteditable class="key description">null</span></p>
+          <separator></separator>
+          <p class="value">Выполнил: <span contenteditable class="key executor">null</span></p>
+          <separator></separator>
+          <p class="value">Тип заявки: <span contenteditable class="key request-type">null</span></p>
+          <separator></separator>
+          <p class="value">Дата начала: <span contenteditable class="key date">null</span></p>
+          <separator></separator>
+          <p class="value">Дата завершения: <span contenteditable class="key date-end">null</span></p>
+        </values-box>
+      </values>
+      <div class="row-container">
+        <button class="default-button control-button save-docx-and-print"><gg-item class="gg-printer"></gg-item>Печать</button>
+        <button class="default-button control-button save-docx"><gg-item class="gg-chevron-double-down"></gg-item><small>Сохранить в DOCX</small></button>
+      </div>
+      <button class="default-button control-button show-advanced"><gg-item class="gg-screen-shot"></gg-item>Дополнительные настройки</button>
+    </controls>
+    <advanced>
+      <settings>
+
+        <settings-option>
+          <div class="toggle-pill-bw">
+            <input type="checkbox" class="print-dialog" id="pill1">
+            <label for="pill1"></label>
+          </div>
+          <small>Диалоговое окно печати</small>
+        </settings-option>
+
+        <settings-option>
+          <div class="toggle-pill-bw">
+            <input type="checkbox" class="always-top" id="pill2">
+            <label for="pill2"></label>
+          </div>
+          <small>Поверх всех окон</small>
+        </settings-option>
+
+        <settings-option>
+          <div class="toggle-pill-bw">
+            <input type="checkbox" class="separate-model" id="pill4">
+            <label for="pill4"></label>
+          </div>
+          <small>Разделить модель оборудования из текста заявки по знаку ","</small>
+        </settings-option>
+
+        <settings-option>
+          <div class="toggle-pill-bw">
+            <input type="checkbox" class="separate-check" id="pill3">
+            <label for="pill3"></label>
+          </div>
+          <small>Разделить</small>
+          <input type="text" class="default-input separator-get" placeholder="Разделитель">
+        </settings-option>
+
+        <separator></separator>
+
+        <input class="default-input custom-template w100" type="text" placeholder="Пользовательский шаблон">
+        <button class="default-button w100 set-template"><gg-item class="gg-check"></gg-item>Применить</button>
+        <button class="default-button w100 set-default-template"><gg-item class="gg-arrows-exchange-v"></gg-item>По умолчанию</button>
+      </settings>
+      <guide>
+        <guide-container>
+          <!-- <p class="guide-header">Как создать пользовательский шаблон:</p>
+          <p class="guide-p"><gg-item class="gg-play-list-add"></gg-item> Создайте в любом удобном месте или возьмите .docx файл </p>
+          <img class="guide-image" src="../media/screenshots/Screenshot_1.png" alt="SCREEN">
+          <p class="guide-p"><gg-item class="gg-format-text"></gg-item> Шаблонизатор будет работать, если вставлять ключевые слова в текст, например: "day", "numerical" или "year"</p>
+          <img class="guide-image" src="../media/screenshots/Screenshot_2.png" alt="SCREEN">
+          <p class="guide-p"><gg-item class="gg-file"></gg-item> Укажите полный путь до файла в поле "Пользовательский шаблон"</p>
+          <img class="guide-image" src="../media/screenshots/Screenshot_3.png" alt="SCREEN">
+          <img class="guide-image" src="../media/screenshots/Screenshot_4.png" alt="SCREEN">
+          <p class="guide-p"><gg-item class="gg-check"></gg-item> Нажмите "применить"</p>
+          <img class="guide-image" src="../media/screenshots/Screenshot_5.png" alt="SCREEN">
+          <img class="guide-image" src="../media/screenshots/Screenshot_6.png" alt="SCREEN"> -->
+          <!-- <p class="guide-p"><gg-item class="gg-code-slash codeslash"></gg-item> Полный список ключевых слов:</p> -->
+
+          <sup>Разработано специально для АО "ТМ-ТЕХНОЛОГИИ"</sup>
+          <sup>Разработчик:</sup>
+          <sup>TMApps by NXGHTMXARE</sup>
+          <sup>Telegram: <span class="link" onclick="window.api.open('https:\/\/t.me/nxghtmxreprince')">@nxghtmxreprince</span></sup>
+
+          <separator></separator>
+
+          <small>Смотрите также другие продукты <span class="link" onclick="window.api.open('http:\/\/ts1.tm.local/')">TMApps</span></small>
+
+          <div class="center">
+            <img src="../media/TMW.png" alt="TM">
+          </div>
+        </guide-container>
+      </guide>
+      <log>
+        <log-container>
+        </log-container>
+      </log>
+    </advanced>
+  </app>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

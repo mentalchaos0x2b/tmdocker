@@ -1,8 +1,8 @@
 {
   "name": "tmdocker",
-  "productName": "tmdocker",
+  "productName": "TMDocker",
   "version": "1.5.2",
-  "description": "My Electron application description",
+  "description": "TMApps by NXGHTMXARE",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -24,7 +24,7 @@
   },
   "keywords": [],
   "author": {
-    "name": "SIXSIXSIX",
+    "name": "NXGHTMXARE",
     "email": "darkels2281@gmail.com"
   },
   "license": "MIT",

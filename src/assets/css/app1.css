@@ -1,0 +1,190 @@
+@font-face {
+    font-family: 'Ubuntu';
+    src: url(../media/Ubuntu-Regular.ttf);
+}
+
+:root {
+    --beta-color-background: rgb(53, 53, 53);
+    --beta-color-background-elements: rgb(33, 33, 33);
+    --beta-color-background-elements-hover: rgb(23, 23, 23);
+    --beta-color-background-elements-disabled: rgb(13, 13, 13);
+    --beta-color-accent: rgb(0, 255, 126);
+    --beta-color-bad: rgb(255, 126, 126);
+
+    --text-color-primary: rgb(240, 240, 240);
+    --text-color-primary-disabled: rgb(180, 180, 180);
+    --text-color-secondary: rgb(11, 11, 11);
+
+    --color-elements: var(--beta-color-background);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+
+    font-family: 'Ubuntu';
+
+    color: var(--text-color-primary);
+}
+
+body {
+    background: var(--beta-color-background);
+}
+
+app {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    padding: .5rem;
+
+    position: relative;
+}
+
+.margin-bottom-all > * {
+    margin-bottom: .5rem;
+}
+
+.margin-bottom-all > *:last-child {
+    margin-bottom: 0;
+}
+
+app > * {
+    width: 100%;
+}
+
+.row-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* gap: .25rem; */
+}
+
+.default-input, .default-button {
+    border: none;
+    outline: none;
+
+    padding: .25rem .5rem;
+
+    height: 2rem;
+
+    width: 10rem;
+
+    background: var(--beta-color-background-elements);
+    color: var(--text-color-primary);
+
+    border-radius: .25rem;
+
+    color: var(--text-color-primary);
+    transition: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.default-input:disabled, .default-button:disabled {
+    background: var(--beta-color-background-elements-disabled);
+}
+
+.default-input:hover, .default-button:hover {
+    background: var(--beta-color-background-elements-hover);
+}
+
+.get-button {
+    width: 2rem;
+}
+
+.get-input {
+    flex: 1 1 0px;
+    margin-right: .5rem;
+}
+
+.values > p {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    color: var(--beta-color-accent);
+}
+
+.values > p > span {
+    margin-left: .25rem;
+
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.save-button > gg-item {
+    margin-right: .5rem;
+}
+
+.save-button {
+    position: fixed;
+
+    width: calc(100% - 1rem);
+
+    bottom: .5rem;
+    left: .5rem;
+}
+
+.tm-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* gap: .25rem; */
+}
+
+.tm-loading-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: .75rem;
+    height: .75rem;
+
+    background: var(--beta-color-accent);
+
+    border-radius: 50%;
+}
+
+@keyframes loading {
+    0% {
+        transform: scale(0);
+    }    
+    100% {
+        transform: scale(1);
+    }
+}
+
+.tm-loading-item:nth-child(1) {
+    animation: loading .5s infinite alternate;
+    animation-delay: -.16s;
+}
+
+.tm-loading-item:nth-child(2) {
+    animation: loading .5s infinite alternate;
+    animation-delay: 0s;
+}
+
+.tm-loading-item:nth-child(3) {
+    animation: loading .5s infinite alternate;
+    animation-delay: .16s;
+}
+
+.tm-loading > * {
+    margin-right: .25rem;
+}
+
+.tm-loading > *:last-child {
+    margin-right: 0;
+}
