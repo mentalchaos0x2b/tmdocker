@@ -497,7 +497,7 @@ $(function () {
         showCap();
     });
 
-    $('.print-dialog').prop('checked', getLocalStorage('print', false));
+    $('.print-dialog').prop('checked', eval(getLocalStorage('print', false)));
 
     $('.print-dialog').on('change', () => {
         setLocalStorage('print', $('.print-dialog').prop('checked'));
