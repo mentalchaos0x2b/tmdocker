@@ -34,10 +34,13 @@ const logger = (text, module = null) => {
 const get = async (callback = () => {}) => {
     const id = $('.get-input').val();
 
+    setLocalStorage('input', id);
+
     logger(`Запрос к API { id: ${id} }`, 'API');
     await new Promise(r => setTimeout(r, 500));
     $.get(linkAPI(id),
         function (data) {
+            logger(JSON.stringify(data, null, 2), "GET");
             callback(data);
         }
     ).fail(() => {
@@ -210,7 +213,7 @@ const appHandler = (callback = () => {}) => {
         if(!eval(getLocalStorage("separate_model", true))) {
             setValue('.model-type', "", 'model_type');
             setValue('.text', res.request[0].TEXT, 'text');
-            logger("1", "0x1");
+            // logger("1", "0x1");
         }
         else {
             let reason = res.request[0].TEXT.split(',');
@@ -225,11 +228,13 @@ const appHandler = (callback = () => {}) => {
                 text[index] = el.trimStart();
             });
     
-            setValue('.model-type', model_type, 'model_type');
+            // setValue('.model-type', model_type, 'model_type');
             setValue('.text', text.join(', '), 'text');
 
-            logger("2", "0x1");
+            // logger("2", "0x1");
         }
+
+        setValue('.model-type', res.request[0].EQUIPMENT, 'model_type');
 
         
 
@@ -256,7 +261,7 @@ const appHandler = (callback = () => {}) => {
         setValue('temp', date.monthAsString, 'end_month');
         setValue('temp', date.year, 'end_year');
 
-        setValue('.request-type', res.request[0].EQUIPMENT_NAME, 'request_type');
+        setValue('.request-type', res.request[0].EQUIPMENT_TYPE_NAME, 'request_type');
 
         if(separateCheck()) {
             setValue('.description', res.request[0].COMPLETED_TASKS, 'description_default');
@@ -453,6 +458,8 @@ ctx.set = {
 
 $(function () {
     advancedHandler();
+
+    $('.get-input').val(getLocalStorage('input', ''));
 
     $(document).on('mousemove', (e) => {
         mouse.x = e.pageX;

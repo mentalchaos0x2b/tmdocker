@@ -621,3 +621,23 @@ context gg-item {
 .center img {
     width: 5rem;
 }
+
+.author-name {
+    color: var(--beta-color-accent);
+}
+
+.author-label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .25rem;
+}
+
+.author-link img {
+    width: 1rem;
+    aspect-ratio: 1 / 1;
+}
+
+.social {
+    gap: .5rem;
+}
