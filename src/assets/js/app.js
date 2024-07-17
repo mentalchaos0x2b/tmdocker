@@ -210,29 +210,32 @@ const appHandler = (callback = () => {}) => {
         const date = parseDate(res.request[0].COMPLETION_DATE);
         const dateBegin = parseDate(res.request[0].CREATION_DATE);
 
-        if(!eval(getLocalStorage("separate_model", true))) {
-            setValue('.model-type', "", 'model_type');
-            setValue('.text', res.request[0].TEXT, 'text');
-            // logger("1", "0x1");
-        }
-        else {
-            let reason = res.request[0].TEXT.split(',');
+        // if(!eval(getLocalStorage("separate_model", true))) {
+        //     setValue('.model-type', "", 'model_type');
+        //     setValue('.text', res.request[0].TEXT, 'text');
+        //     // logger("1", "0x1");
+        // }
+        // else {
+        //     let reason = res.request[0].TEXT.split(',');
 
-            // console.log(reason);
+        //     // console.log(reason);
     
-            const model_type = reason[0];
+        //     const model_type = reason[0];
     
-            const text = reason.filter((el, index) => index > 0);
+        //     const text = reason.filter((el, index) => index > 0);
     
-            text.forEach((el, index) => {
-                text[index] = el.trimStart();
-            });
+        //     text.forEach((el, index) => {
+        //         text[index] = el.trimStart();
+        //     });
     
-            // setValue('.model-type', model_type, 'model_type');
-            setValue('.text', text.join(', '), 'text');
+        //     // setValue('.model-type', model_type, 'model_type');
+        //     setValue('.text', text.join(', '), 'text');
 
-            // logger("2", "0x1");
-        }
+        //     // logger("2", "0x1");
+        // }
+
+        // setValue('.model-type', "", 'model_type');
+        setValue('.text', res.request[0].TEXT, 'text');
 
         setValue('.model-type', res.request[0].EQUIPMENT, 'model_type');
 
@@ -515,13 +518,13 @@ $(function () {
         });
     });
     
-    $('.separate-model').prop('checked', eval(getLocalStorage('separate_model', true)));
+    // $('.separate-model').prop('checked', eval(getLocalStorage('separate_model', true)));
 
-    $('.separate-model').on('change', () => {
-        setLocalStorage('separate_model', $('.separate-model').prop('checked'));
-        $('.save-docx').prop('disabled', true);
-        showCap();
-    });
+    // $('.separate-model').on('change', () => {
+    //     setLocalStorage('separate_model', $('.separate-model').prop('checked'));
+    //     $('.save-docx').prop('disabled', true);
+    //     showCap();
+    // });
 
     setTitle();
 
