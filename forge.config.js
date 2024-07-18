@@ -7,15 +7,15 @@ module.exports = {
   packagerConfig: {
     asar: true,
     name: "TMDocker",
-    icon: 'src/assets/media/TMW.ico',
+    icon: 'src/assets/media/icons/docker.ico',
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        icon: 'src/assets/media/TMW.ico',
-        setupIcon: 'src/assets/media/TMW.ico',
+        icon: 'src/assets/media/icons/docker.ico',
+        setupIcon: 'src/assets/media/icons/docker.ico',
         
       },
     },
@@ -26,13 +26,13 @@ module.exports = {
     {
       name: '@electron-forge/maker-deb',
       config: {
-        icon: 'src/assets/media/TMW.ico'
+        icon: 'src/assets/media/icons/docker.ico'
       },
     },
     {
       name: '@electron-forge/maker-rpm',
       config: {
-        icon: 'src/assets/media/TMW.ico'
+        icon: 'src/assets/media/icons/docker.ico'
       },
     },
   ],
@@ -45,7 +45,7 @@ module.exports = {
           name: 'tmdocker',
         },
         prerelease: false,
-        draft: true,
+        draft: false,
         authToken: process.env.GITHUB_TOKEN
       }
     }
