@@ -130,5 +130,24 @@ contextBridge.exposeInMainWorld('api',{
     },
     open: (url) => {
         cp.exec(`start ${url}`);
+    },
+    cacheFiles: () => {
+        return fs.readdirSync("C:/TMDocker/generated").length;
+    },
+    cacheSize: () => {
+        let size = 0;
+
+        const files = fs.readdirSync("C:/TMDocker/generated");
+        for(const file of files) {
+            size += fs.statSync(`C:/TMDocker/generated/${file}`).size;
+        }
+
+        return Math.floor((size / 1024 / 1024) * 100) / 100;
+    },
+    cacheRemove: () => {
+        const files = fs.readdirSync("C:/TMDocker/generated");
+        for(const file of files) {
+            fs.unlinkSync(`C:/TMDocker/generated/${file}`);
+        }
     }
 });

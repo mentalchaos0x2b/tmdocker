@@ -146,6 +146,8 @@ const docx = async (openAfter = true) => {
 
     logger(res.error ? `Произошла ошибка: ${res.error}` : `Документ создан: ${res.path}`, 'DOCX');
 
+    getCacheInfo();
+
     return res;
 }
 
@@ -180,6 +182,18 @@ const request_type = {
     1: "КМТ",
     2: "АСК",
     3: "ЭВМ"
+}
+
+const getCacheInfo = () => {
+    const cache = {
+        size: window.api.cacheSize(),
+        count: window.api.cacheFiles()
+    }
+
+    $('.cache-size').html(cache.size);
+    $('.cache-files').html(cache.count);
+
+    return cache;
 }
 
 const appHandler = (callback = () => {}) => {
@@ -459,8 +473,20 @@ ctx.set = {
     }
 }
 
+const cacheRemoveHander = () => {
+    $('.remove-cache').click(() => {
+        window.api.cacheRemove();
+        getCacheInfo();
+        logger("Кэш очищен", "CACHE");
+    });
+}
+
 $(function () {
     advancedHandler();
+
+    getCacheInfo();
+
+    cacheRemoveHander();
 
     $('.get-input').val(getLocalStorage('input', ''));
 

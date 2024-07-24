@@ -13,9 +13,9 @@ const createWindow = () => {
 
   mainWindow = new BrowserWindow({
     width: 850,
-    height: 700,
+    height: 750,
     minWidth: 850,
-    minHeight: 700,
+    minHeight: 750,
     webPreferences: {
       preload: path.join(__dirname, '/assets/js/preload.js'),
       contextIsolation: true,
@@ -38,15 +38,15 @@ ipcMain.on('extra', (event, args) => {
 
   if(!show) {
     // mainWindow.setResizable(false);
-    mainWindow.setMinimumSize(350, 700);
+    mainWindow.setMinimumSize(350, 750);
     mainWindow.setMaximumSize(350, 1440);
-    mainWindow.setSize(350, 700);
+    mainWindow.setSize(350, 750);
   }
   else {
     // mainWindow.setResizable(true);
-    mainWindow.setMinimumSize(850, 700);
+    mainWindow.setMinimumSize(850, 750);
     mainWindow.setMaximumSize(3656, 2664);
-    mainWindow.setSize(850, 700);
+    mainWindow.setSize(850, 750);
   }
 });
 

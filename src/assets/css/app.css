@@ -528,9 +528,7 @@ settings-option > input {
     background: #50565a;
     border-radius: 1em;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+    user-select: none;
     -webkit-transition: background 0.1s ease-in-out;
     transition: background 0.1s ease-in-out;
 }
@@ -640,4 +638,20 @@ context gg-item {
 
 .social {
     gap: .5rem;
+}
+
+.remove-cache gg-item {
+    transform: scale(0.9);
+}
+
+.accent {
+    color: var(--beta-color-accent);
+}
+
+cache {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
