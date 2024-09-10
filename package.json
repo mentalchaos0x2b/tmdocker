@@ -1,7 +1,7 @@
 {
   "name": "tmdocker",
   "productName": "TMDocker",
-  "version": "1.5.10",
+  "version": "1.5.11",
   "description": "TMApps by NXGHTMXARE",
   "main": "src/index.js",
   "scripts": {
