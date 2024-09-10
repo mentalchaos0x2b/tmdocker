@@ -21,6 +21,8 @@ let template = null;
 
 let found = false;
 
+let currentEE = 1;
+
 const setTitle = () => {
     window.document.title = `TMDocker ${window.api.version}`;
 }
@@ -249,7 +251,7 @@ const appHandler = (callback = () => {}) => {
         // }
 
         // setValue('.model-type', "", 'model_type');
-        setValue('.text', res.request[0].TEXT, 'text');
+        setValue('.text', res.request[0].TEXT, 'task_text');
 
         setValue('.model-type', res.request[0].EQUIPMENT, 'model_type');
 
@@ -257,13 +259,13 @@ const appHandler = (callback = () => {}) => {
 
         // console.log(text);
 
-        setValue('.id', res.request[0].ID, 'id');
-        setValue('.applicant', res.request[0].APPLICANT, 'applicant');
-        setValue('.phone', res.request[0].PHONE, 'phone');
-        setValue('.sn', res.request[0].SERIAL_NUMBER, 'sn');
+        setValue('.id', res.request[0].ID, 'task_id');
+        setValue('.applicant', res.request[0].APPLICANT, 'task_applicant');
+        setValue('.phone', res.request[0].PHONE, 'task_phone');
+        setValue('.sn', res.request[0].SERIAL_NUMBER, 'task_sn');
         // setValue('.description', res.request[0].COMPLETED_TASKS, 'description_1');
-        setValue('.executor', executor.replace(/(<|&lt;)br\s*\/*(>|&gt;)/g, ' '), 'executor');
-        setValue('.notes', res.request[0].EQUIPMENT_NOTES, 'notes');
+        setValue('.executor', executor.replace(/(<|&lt;)br\s*\/*(>|&gt;)/g, ' '), 'task_executor');
+        setValue('.notes', res.request[0].EQUIPMENT_NOTES, 'task_notes');
 
         setValue('.date', dateBegin.string, 'begin_date');
         setValue('.date-end', date.string, 'end_date');
@@ -481,12 +483,40 @@ const cacheRemoveHander = () => {
     });
 }
 
+const easterEggSrc = () => {
+    if(currentEE > 4) {
+        currentEE = 1;
+    }
+
+    $('.easter-egg').attr('src', `../media/ee${currentEE}.jpg`);
+
+    currentEE++;
+}
+
+const easeterEgg = () => {
+    $('ee-trigger').on('mouseenter', () => {
+        easterEggSrc();
+
+        $('.easter-egg').css("right", "1rem");
+        $('.easter-egg').css("transform", "rotate(-15deg)");
+        
+        setTimeout(() => {
+            $('.easter-egg').css("right", "-15rem");
+        $('.easter-egg').css("transform", "rotate(0deg)");
+        }, 2000);
+    });
+
+    
+}
+
 $(function () {
     advancedHandler();
 
     getCacheInfo();
 
     cacheRemoveHander();
+
+    easeterEgg();
 
     $('.get-input').val(getLocalStorage('input', ''));
 
@@ -580,14 +610,14 @@ $(function () {
         });
     });
 
-    setEditHandler('.id', 'id');
-    setEditHandler('.applicant', 'applicant');
-    setEditHandler('.phone', 'phone');
-    setEditHandler('.sn', 'sn');
-    setEditHandler('.text', 'text');
+    setEditHandler('.id', 'task_id');
+    setEditHandler('.applicant', 'task_applicant');
+    setEditHandler('.phone', 'task_phone');
+    setEditHandler('.sn', 'task_sn');
+    setEditHandler('.text', 'task_text');
     setEditHandler('.description', 'description');
     setEditHandler('.date', 'date');
-    setEditHandler('.executor', 'executor');
+    setEditHandler('.executor', 'task_executor');
     setEditHandler('.request-type', 'request_type');
 
     $('.save-docx').click(() => {
@@ -608,4 +638,4 @@ $(function () {
     });
 });
 
-//https://app05.tm.local/ojournal-api/getrequests?id=null&dateStart=01.03.2016&dateEnd=18.06.2035&isMyRequests=false&type=3&searchText=61258&condition=null&executor=null
+//https://app05.tm.local/ojournal-api/getrequests?id=null&dateStart=01.03.2016&dateEnd=18.06.2035&isMyRequests=false&type=3&searchText=61258&condition=null&executor=null task_id request_type

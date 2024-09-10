@@ -655,3 +655,37 @@ cache {
     justify-content: center;
     align-items: center;
 }
+
+ee-trigger {
+    position: fixed;
+
+    right: 5px;
+    bottom: 5px;
+
+    display: block;
+    width: 1.5rem;
+    height: .75rem;
+
+    background: transparent;
+
+    z-index: 999;
+}
+
+.easter-egg {
+    position: fixed;
+
+    top: 1rem;
+    right: -15rem;
+
+    transform: rotate(0deg);
+
+    width: 10rem;
+
+    z-index: 999;
+
+    pointer-events: none;
+
+    transition: right .5s ease-out, transform .5s ease-out;
+
+    border-radius: .5rem;
+}
