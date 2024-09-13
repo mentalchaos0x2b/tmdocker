@@ -1,4 +1,4 @@
-const plug = {"request":[{"ID":61258,"APPLICANT":"Монахов Е. А.","DEPARTAMENT":"СЗ и ВК","PHONE":"88-86","TEXT":"МФУ Kyocera M 2235 dn застревает бумага.","CONDITION":3,"CONDITION_NAME":"Выполнено","CREATION_DATE":"2024-06-19T10:54:18.0000000","ADDRESS":null,"COMPLETION_DATE":"2024-06-19T11:27:00.0000000","COMPLETED_TASKS":"Профилактика. Диагностика. Ремонт термоузла. Чистка драм юнита. Замена картриджа.","PROPHYLACTIC_NOTICE":0,"PROPHYLACTIC_PASSAGE":1,"CARRYING_REPAIRS":0,"TYPE":3,"IS_PROJECT":0,"SERIAL_NUMBER":"R5L9862099","EQUIPMENT_NOTES":null,"EXECUTOR_NAME":"Мезенцев Ю.Л.,<br>Никитин Д.Н.","TIME_COMPLETE":"1 ч","IS_VIEWING":0,"EQUIPMENT":2,"EQUIPMENT_NAME":"КМТ"}],"executor":[]};
+const plug = { "request": [{ "ID": 61258, "APPLICANT": "Монахов Е. А.", "DEPARTAMENT": "СЗ и ВК", "PHONE": "88-86", "TEXT": "МФУ Kyocera M 2235 dn застревает бумага.", "CONDITION": 3, "CONDITION_NAME": "Выполнено", "CREATION_DATE": "2024-06-19T10:54:18.0000000", "ADDRESS": null, "COMPLETION_DATE": "2024-06-19T11:27:00.0000000", "COMPLETED_TASKS": "Профилактика. Диагностика. Ремонт термоузла. Чистка драм юнита. Замена картриджа.", "PROPHYLACTIC_NOTICE": 0, "PROPHYLACTIC_PASSAGE": 1, "CARRYING_REPAIRS": 0, "TYPE": 3, "IS_PROJECT": 0, "SERIAL_NUMBER": "R5L9862099", "EQUIPMENT_NOTES": null, "EXECUTOR_NAME": "Мезенцев Ю.Л.,<br>Никитин Д.Н.", "TIME_COMPLETE": "1 ч", "IS_VIEWING": 0, "EQUIPMENT": 2, "EQUIPMENT_NAME": "КМТ" }], "executor": [] };
 
 const linkAPI = (id = 0) => {
     return `https://app05.tm.local/ojournal-api/getrequests?id=${id}`;
@@ -23,6 +23,16 @@ let found = false;
 
 let currentEE = 1;
 
+const gitData = {
+    api: "https://api.github.com/repos/mentalchaos0x2b/tmdocker/releases",
+    link: "",
+    body: ""
+}
+const versionControl = {
+    git: 0,
+    current: 0
+}
+
 const setTitle = () => {
     window.document.title = `TMDocker ${window.api.version}`;
 }
@@ -33,7 +43,7 @@ const logger = (text, module = null) => {
     $("log").animate({ scrollTop: $("log-container").height() }, 100);
 }
 
-const get = async (callback = () => {}) => {
+const get = async (callback = () => { }) => {
     const id = $('.get-input').val();
 
     setLocalStorage('input', id);
@@ -91,16 +101,16 @@ const parseDate = (date) => {
         month = dateObject.getMonth() + 1,
         year = dateObject.getFullYear();
 
-        if(day < 10) day = `0${day}`;
-        if(month < 10) month = `0${month}`;
+    if (day < 10) day = `0${day}`;
+    if (month < 10) month = `0${month}`;
 
-        return {
-            day: day,
-            month: month,
-            monthAsString: monthAsString[month - 1],
-            year: year,
-            string: `${day}.${month}.${year}`
-        }
+    return {
+        day: day,
+        month: month,
+        monthAsString: monthAsString[month - 1],
+        year: year,
+        string: `${day}.${month}.${year}`
+    }
 }
 
 const removeLoading = (selector) => {
@@ -139,7 +149,7 @@ const setCapText = (text) => {
 }
 
 const docx = async (openAfter = true) => {
-    if(!found) {
+    if (!found) {
         logger("Не возможно сохранить файл, заявка не найдена", "DOCX");
         return;
     }
@@ -162,7 +172,7 @@ const setEditHandler = (selector, object) => {
 }
 
 const loadTemplate = () => {
-    if(localStorage.getItem('template')) {
+    if (localStorage.getItem('template')) {
         template = localStorage.getItem('template');
         $('.custom-template').val(template);
         logger(`Пользовательский шаблон загружен`, 'TEMPLATE LOADER');
@@ -198,8 +208,8 @@ const getCacheInfo = () => {
     return cache;
 }
 
-const appHandler = (callback = () => {}) => {
-    environment = { };
+const appHandler = (callback = () => { }) => {
+    environment = {};
 
     get((res) => {
 
@@ -208,7 +218,7 @@ const appHandler = (callback = () => {}) => {
         hideCap();
         hideLoading();
 
-        if(!res.request[0]) {
+        if (!res.request[0]) {
             showCap();
             logger("Заявка не найдена", "API");
 
@@ -219,7 +229,7 @@ const appHandler = (callback = () => {}) => {
 
         found = true;
 
-        if(res.request[0].CONDITION_NAME !== "Выполнено") logger("ЗАЯВКА НЕ ЗАВЕРШЕНА", "APP");
+        if (res.request[0].CONDITION_NAME !== "Выполнено") logger("ЗАЯВКА НЕ ЗАВЕРШЕНА", "APP");
 
         const executor = String(res.request[0].EXECUTOR_NAME);
 
@@ -235,15 +245,15 @@ const appHandler = (callback = () => {}) => {
         //     let reason = res.request[0].TEXT.split(',');
 
         //     // console.log(reason);
-    
+
         //     const model_type = reason[0];
-    
+
         //     const text = reason.filter((el, index) => index > 0);
-    
+
         //     text.forEach((el, index) => {
         //         text[index] = el.trimStart();
         //     });
-    
+
         //     // setValue('.model-type', model_type, 'model_type');
         //     setValue('.text', text.join(', '), 'text');
 
@@ -255,7 +265,7 @@ const appHandler = (callback = () => {}) => {
 
         setValue('.model-type', res.request[0].EQUIPMENT, 'model_type');
 
-        
+
 
         // console.log(text);
 
@@ -282,7 +292,7 @@ const appHandler = (callback = () => {}) => {
 
         setValue('.request-type', res.request[0].EQUIPMENT_TYPE_NAME, 'request_type');
 
-        if(separateCheck()) {
+        if (separateCheck()) {
             setValue('.description', res.request[0].COMPLETED_TASKS, 'description_default');
 
             const tasks = res.request[0].COMPLETED_TASKS.split($('.separator-get').val());
@@ -301,7 +311,7 @@ const appHandler = (callback = () => {}) => {
             let count = 1;
 
             tasks.forEach(el => {
-                if(el.length > 0) {
+                if (el.length > 0) {
                     setValue('temp', `${el}.`, `description_${count}s`);
                 }
                 else setValue('temp', el, `description_${count}s`);
@@ -332,47 +342,47 @@ const appHandler = (callback = () => {}) => {
 }
 
 const advancedHandler = () => {
-    if(toggleAdvanced) {
+    if (toggleAdvanced) {
         $('advanced').show();
 
-        window.api.extra({show: true});
+        window.api.extra({ show: true });
 
         toggleAdvanced = !toggleAdvanced;
     }
     else {
         $('advanced').hide();
 
-        window.api.extra({show: false});
+        window.api.extra({ show: false });
 
         toggleAdvanced = !toggleAdvanced;
     }
 
     $('.show-advanced').click(() => {
-        if(toggleAdvanced) {
+        if (toggleAdvanced) {
             $('advanced').show();
 
-            window.api.extra({show: true});
+            window.api.extra({ show: true });
 
             toggleAdvanced = !toggleAdvanced;
         }
         else {
             $('advanced').hide();
 
-            window.api.extra({show: false});
+            window.api.extra({ show: false });
 
             toggleAdvanced = !toggleAdvanced;
         }
     });
 }
 
-const getLocalStorage = (variable, ifNull, callback = () => {}) => {
+const getLocalStorage = (variable, ifNull, callback = () => { }) => {
     const value = localStorage.getItem(variable) || ifNull;
     logger(`Получена переменная: ${variable} со значением: ${value}`, "LOCAL STORAGE");
     callback(value);
     return value;
 }
 
-const setLocalStorage = (variable, value, callback = () => {}) => {
+const setLocalStorage = (variable, value, callback = () => { }) => {
     localStorage.setItem(variable, value);
     logger(`Переменная: ${variable} установлена со значением: ${value}`, "LOCAL STORAGE");
     callback(value);
@@ -406,12 +416,12 @@ const ctx = {
     },
     paste: () => {
         navigator.clipboard.readText().then(text => {
-            if(!digits_only(text)) {
+            if (!digits_only(text)) {
                 logger("Строка содержит буквы", "CLIPBOARD");
                 return;
             }
 
-           $('.get-input').val(text); 
+            $('.get-input').val(text);
         });
         hideContext();
     },
@@ -427,12 +437,12 @@ const ctx = {
     },
     pasteAndRun: () => {
         navigator.clipboard.readText().then(text => {
-            if(!digits_only(text)) {
+            if (!digits_only(text)) {
                 logger("Строка содержит буквы", "CLIPBOARD");
                 return;
             }
 
-           $('.get-input').val(text); 
+            $('.get-input').val(text);
 
             showLoading();
             appHandler();
@@ -441,19 +451,19 @@ const ctx = {
     },
     pasteAndPrint: () => {
         navigator.clipboard.readText().then(text => {
-            if(!digits_only(text)) {
+            if (!digits_only(text)) {
                 logger("Строка содержит буквы", "CLIPBOARD");
                 return;
             }
 
-           $('.get-input').val(text); 
+            $('.get-input').val(text);
 
-           showLoading();
-           appHandler(async () => {
-               const res = await docx(false);
-               const dialog = $('.print-dialog').prop('checked');
-               window.api.print(res.path, dialog);
-           });
+            showLoading();
+            appHandler(async () => {
+                const res = await docx(false);
+                const dialog = $('.print-dialog').prop('checked');
+                window.api.print(res.path, dialog);
+            });
         });
         hideContext();
     }
@@ -484,32 +494,112 @@ const cacheRemoveHander = () => {
 }
 
 const easterEggSrc = () => {
-    if(currentEE > 4) {
+    if (currentEE > 2) {
         currentEE = 1;
     }
 
-    $('.easter-egg').attr('src', `../media/ee${currentEE}.jpg`);
+    $('.easter-egg').attr('src', `../media/ee${currentEE}.png`);
 
     currentEE++;
 }
 
 const easeterEgg = () => {
-    $('ee-trigger').on('mouseenter', () => {
-        easterEggSrc();
+    let inAnimation = false;
 
-        $('.easter-egg').css("right", "1rem");
-        $('.easter-egg').css("transform", "rotate(-15deg)");
-        
-        setTimeout(() => {
-            $('.easter-egg').css("right", "-15rem");
-        $('.easter-egg').css("transform", "rotate(0deg)");
-        }, 2000);
+    $('ee-trigger').on('mouseenter', () => {
+        if(!inAnimation) {
+            inAnimation = true;
+
+            easterEggSrc();
+
+            $('.easter-egg').css("right", "-1rem");
+            $('.easter-egg').css("transform", "rotate(-50deg)");
+    
+            setTimeout(() => {
+                $('.easter-egg').css("right", "-15rem");
+                $('.easter-egg').css("transform", "rotate(0deg)");
+            }, 2000);
+
+            setTimeout(() => {
+                inAnimation = false;  
+            }, 3000);
+        }
     });
 
-    
+
+}
+
+const updateInit = async () => {
+    $("update").hide();
+
+    try {
+        versionControl.current = versionToInt(window.api.version);
+
+        const res = await getGitVersion();
+
+        versionControl.git = versionToInt(res);
+
+        if (versionControl.current < versionControl.git) {
+            $("update").show();
+
+            $('advanced').show();
+
+            window.api.extra({ show: true });
+
+            toggleAdvanced = !toggleAdvanced;
+
+            try {
+                $('.update-body').append(marked.parse(gitData.body) || '<p>Текст обновления не найден</p>');
+            }
+            catch {
+                $('.update-body').append(`<p>Текст обновления не найден</p>`);
+            }
+
+            $('.update-button').click(() => {
+                window.api.open(gitData.link);
+            });
+
+            logger(`UPDATE FOUND`, "UPDATE");
+        }
+        else {
+            logger(`UPDATE NOT FOUND`, "UPDATE");
+        }
+    }
+    catch(ex) {
+        logger(`UPDATE FAILED: (${ex})`, "UPDATE");
+    }
+
+    $('.update-close').click(() => {
+        $("update").hide();
+    });
+
+    logger(`GIT: ${JSON.stringify(gitData, null, 2)}`, "UPDATE");
+    logger(`Version Control: ${JSON.stringify(versionControl, null, 2)}`, "UPDATE");
+}
+
+const versionToInt = (str) => {
+    const buffer = str.split('.');
+    return parseInt(buffer[0]) * 10000 + parseInt(buffer[1]) * 1000 + parseInt(buffer[2]) * 100;
+}
+
+const getGitVersion = async () => {
+    try {
+        const res = await fetch(gitData.api);
+        const data = await res.json();
+
+        gitData.link = data[0].assets[2].browser_download_url;
+        gitData.body = data[0].body;
+
+        return data[0].tag_name.replace('v', '');
+    }
+    catch (ex) {
+        logger(`GIT URL FETCH ERROR: (${ex})`, "UPDATE");
+    }
 }
 
 $(function () {
+    updateInit();
+
     advancedHandler();
 
     getCacheInfo();
@@ -526,13 +616,13 @@ $(function () {
 
         // console.log(mouse);
 
-        if(context) {
-            
+        if (context) {
+
         }
     });
 
     $('.get-input').on('mousedown', (e) => {
-        if(e.button === 2) {
+        if (e.button === 2) {
             showContext();
         }
     });
@@ -551,7 +641,7 @@ $(function () {
     $('.separator-get').val(getLocalStorage('separator', '.'));
 
     $('.separator-get').on('input', () => {
-        setLocalStorage('separator', $('.separator-get').val());   
+        setLocalStorage('separator', $('.separator-get').val());
         $('.save-docx').prop('disabled', true);
         showCap();
     });
@@ -573,7 +663,7 @@ $(function () {
             window.api.setAlwaysOnTop(value);
         });
     });
-    
+
     // $('.separate-model').prop('checked', eval(getLocalStorage('separate_model', true)));
 
     // $('.separate-model').on('change', () => {
@@ -595,7 +685,7 @@ $(function () {
     });
 
     $('.get-input').on('keydown', (e) => {
-        if(e.key == "Enter") {
+        if (e.key == "Enter") {
             showLoading();
             appHandler();
         }

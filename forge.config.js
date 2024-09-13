@@ -41,7 +41,7 @@ module.exports = {
       name: '@electron-forge/publisher-github',
       config: {
         repository: {
-          owner: 'nxghtmxre0xf',
+          owner: 'mentalchaos0x2b',
           name: 'tmdocker',
         },
         prerelease: false,
