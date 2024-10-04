@@ -307,6 +307,8 @@ const appHandler = (callback = () => { }) => {
             setValue('temp', "", 'description_8s');
             setValue('temp', "", 'description_9s');
             setValue('temp', "", 'description_10s');
+            setValue('temp', "", 'description_11s');
+            setValue('temp', "", 'description_12s');
 
             let count = 1;
 
