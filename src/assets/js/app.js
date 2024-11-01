@@ -197,15 +197,23 @@ const request_type = {
 }
 
 const getCacheInfo = () => {
-    const cache = {
-        size: window.api.cacheSize(),
-        count: window.api.cacheFiles()
+    try {
+        const cache = {
+            size: window.api.cacheSize(),
+            count: window.api.cacheFiles()
+        }
+    
+        $('.cache-size').html(cache.size);
+        $('.cache-files').html(cache.count);
+    
+        return cache;
     }
+    catch {
+        logger("Ошибка при получении информации о кэше", "CACHE");
 
-    $('.cache-size').html(cache.size);
-    $('.cache-files').html(cache.count);
-
-    return cache;
+        $('.cache-size').html("X");
+        $('.cache-files').html("X");
+    }
 }
 
 const appHandler = (callback = () => { }) => {
@@ -464,7 +472,9 @@ const ctx = {
             appHandler(async () => {
                 const res = await docx(false);
                 const dialog = $('.print-dialog').prop('checked');
-                window.api.print(res.path, dialog);
+                const result = await window.api.print(res.path, dialog);
+
+                logger(JSON.stringify(result, null, 2), "PRINT");
             });
         });
         hideContext();
@@ -600,6 +610,8 @@ const getGitVersion = async () => {
 }
 
 $(function () {
+    window.api.createPath();
+
     updateInit();
 
     advancedHandler();
@@ -698,7 +710,9 @@ $(function () {
         appHandler(async () => {
             const res = await docx(false);
             const dialog = $('.print-dialog').prop('checked');
-            window.api.print(res.path, dialog);
+            const result = await window.api.print(res.path, dialog);
+
+            logger(JSON.stringify(result, null, 2), "PRINT");
         });
     });
 

@@ -13,9 +13,45 @@ const cp = require("child_process");
 const pkg = require('../../../package.json');
 
 const example = path.join(__dirname.substring(0, __dirname.length - 3), 'examples/default.docx');
-const savePath = (name) => {
-    return path.join("C:/TMDocker", `generated/${name}.docx`);
+
+const wordPathes = {
+    word2016: {
+        "32bit": "C:/Program Files (x86)/Microsoft Office/Office16/WINWORD.EXE",
+        "64bit": "C:/Program Files/Microsoft Office/Office16/WINWORD.EXE"
+    },
+    word2010: {
+        "32bit": "C:/Program Files (x86)/Microsoft Office/Office14/WINWORD.EXE",
+        "64bit": "C:/Program Files/Microsoft Office/Office14/WINWORD.EXE"
+    }
 }
+
+const savePath = {
+    dockerTempFolder: "C:/TMDocker",
+    generatedFolder: "generated",
+    tempPath() { return path.join(this.dockerTempFolder, this.generatedFolder) },
+    file: (name) => { return `${name}.docx` },
+    full(name) {
+        return path.join(this.dockerTempFolder, this.generatedFolder, this.file(name));
+    },
+    create() {
+        if(!fs.existsSync(this.dockerTempFolder)) {
+            fs.mkdirSync(this.dockerTempFolder, { recursive: true });
+            fs.mkdirSync(this.tempPath(), { recursive: true });
+            return true;
+        }
+
+        if(!fs.existsSync(this.tempPath())) {
+            fs.mkdirSync(this.tempPath(), { recursive: true });
+            return true;
+        }
+
+        return false;
+    }
+}
+
+// const savePath = (name) => {
+//     return path.join("C:/TMDocker", `generated/${name}.docx`);
+// }
 
 const generateName = () => {
     const now = Date.now();
@@ -65,19 +101,25 @@ function replaceTextInXml(xmlString, oldText, newText) {
 }
 
 contextBridge.exposeInMainWorld('api',{
+    createPath: () => {
+        return savePath.create();
+    },
     editDocx: async (environment, template = null, openAfter = true) => {
 
-        try {
-            fs.mkdirSync("C:/TMDocker/generated", { recursive: true });
-        } catch (e) {
-            console.log(e);
-        }
+        // try {
+        //     fs.mkdirSync("C:/TMDocker/generated", { recursive: true });
+        // } catch (e) {
+        //     console.log(e);
+        // }
 
         try {
-            const fileName = savePath(generateName());
+
+            savePath.create();
 
             // console.log(template);
             // console.log(template || example);
+
+            const fileName = savePath.full(`tmdocker_${Date.now()}`);
 
             const doc = await patchDocument(fs.readFileSync(template || example), {patches: {}});
 
@@ -121,8 +163,27 @@ contextBridge.exposeInMainWorld('api',{
         ipcRenderer.send('extra', args);
     },
     print: (file, dialog = false) => {
-        if(!dialog) cp.exec(`"C:\\Program Files (x86)\\Microsoft Office\\Office16\\WINWORD.EXE" ${file} /mFilePrintDefault /mFileExit /q /n`);
-        else cp.exec(`"C:\\Program Files (x86)\\Microsoft Office\\Office16\\WINWORD.EXE" ${file} /mFilePrint /q /n`);
+        // Исправлено 01.11.2024
+        // Установлены пути для 32 и 64 битных версий Word
+
+        const result = [];
+        
+        for(const version of Object.keys(wordPathes)) {
+            for(const bit of Object.keys(wordPathes[version])) {
+
+                result.push(`Verify: ${version} ${bit} => ${fs.existsSync(wordPathes[version][bit]) ? "Found" : "Not found"}`);
+
+                if(!fs.existsSync(wordPathes[version][bit])) continue;
+
+                cp.exec(`"${wordPathes[version][bit]}" ${file} /mFilePrintDefault /mFileExit /q /n`);
+                break;
+            }
+        }
+
+        return result;
+
+        // if(!dialog) cp.exec(`"C:\\Program Files (x86)\\Microsoft Office\\Office16\\WINWORD.EXE" ${file} /mFilePrintDefault /mFileExit /q /n`);
+        // else cp.exec(`"C:\\Program Files (x86)\\Microsoft Office\\Office16\\WINWORD.EXE" ${file} /mFilePrint /q /n`);
     },
     setAlwaysOnTop: (value) => {
         ipcRenderer.send('setAlwaysOnTop', value);
